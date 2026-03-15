@@ -1,0 +1,1 @@
+// Ready-table namespace placeholder.

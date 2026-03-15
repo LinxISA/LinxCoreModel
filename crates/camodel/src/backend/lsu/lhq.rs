@@ -1,0 +1,1 @@
+// LHQ namespace placeholder.

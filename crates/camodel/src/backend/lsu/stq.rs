@@ -1,0 +1,1 @@
+// STQ namespace placeholder.

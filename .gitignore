@@ -1,0 +1,7 @@
+target/
+out/
+*.log
+*.json
+*.jsonl
+*.linxtrace
+*.md.tmp

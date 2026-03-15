@@ -1,0 +1,7 @@
+mem_bytes = 134217728
+stack_size = 8388608
+args = ["guest-program"]
+
+[env]
+LX_TRACE = "1"
+LX_BOOTSTRAP = "1"

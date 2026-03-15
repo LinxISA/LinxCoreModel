@@ -1,0 +1,11 @@
+[[cases]]
+name = "bootstrap-func"
+engine = "func"
+elf = "/absolute/path/to/guest.elf"
+iterations = 1
+
+[[cases]]
+name = "bootstrap-cycle"
+engine = "cycle"
+elf = "/absolute/path/to/guest.elf"
+iterations = 1

@@ -1,0 +1,6 @@
+mem_bytes = 134217728
+stack_size = 8388608
+args = []
+workdir = "/Users/zhoubot/linx-isa/tools/LinxCoreModel/tests/fixtures"
+
+[env]
