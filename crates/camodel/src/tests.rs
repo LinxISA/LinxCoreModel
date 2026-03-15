@@ -1,5 +1,6 @@
 use super::*;
 use elf::{LoadedElf, SegmentImage};
+use funcmodel::{FuncEngine, FuncRunOptions};
 use isa::CommitRecord;
 use runtime::GuestRuntime;
 use runtime::{BootInfo, GuestMemory, MemoryRegion, RuntimeConfig};
@@ -79,6 +80,54 @@ fn cycle_engine_retires_multiple_uops() {
             .count()
             > 0
     );
+}
+
+#[test]
+fn crosscheck_func_and_cycle_engines_on_sample_runtime() {
+    let program = vec![
+        enc_addi(2, 0, 1),
+        enc_addi(3, 2, 2),
+        enc_addi(4, 3, 3),
+        enc_addi(9, 0, 93),
+        enc_acrc(1),
+    ];
+    let runtime = sample_runtime(&program, &[]);
+
+    let func_bundle = FuncEngine
+        .run(&runtime, &FuncRunOptions { max_steps: 64 })
+        .unwrap();
+    let cycle_bundle = CycleEngine
+        .run(
+            &runtime,
+            &CycleRunOptions {
+                max_cycles: 64,
+                ..CycleRunOptions::default()
+            },
+        )
+        .unwrap();
+
+    assert_eq!(
+        func_bundle.result.metrics.exit_reason,
+        cycle_bundle.result.metrics.exit_reason
+    );
+    assert_eq!(
+        func_bundle.result.commits.len(),
+        cycle_bundle.result.commits.len()
+    );
+
+    let func_commits = func_bundle
+        .result
+        .commits
+        .iter()
+        .map(normalize_commit_for_crosscheck)
+        .collect::<Vec<_>>();
+    let cycle_commits = cycle_bundle
+        .result
+        .commits
+        .iter()
+        .map(normalize_commit_for_crosscheck)
+        .collect::<Vec<_>>();
+    assert_eq!(func_commits, cycle_commits);
 }
 
 #[test]
@@ -8800,6 +8849,12 @@ fn sample_runtime(words: &[u32], extra_regions: &[MemoryRegion]) -> GuestRuntime
         },
         fd_table: HashMap::from([(0, 0), (1, 1), (2, 2)]),
     }
+}
+
+fn normalize_commit_for_crosscheck(commit: &CommitRecord) -> CommitRecord {
+    let mut normalized = commit.clone();
+    normalized.cycle = 0;
+    normalized
 }
 
 fn enc_addi(rd: u32, rs1: u32, imm: u32) -> u32 {

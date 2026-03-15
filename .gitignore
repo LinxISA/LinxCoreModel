@@ -5,3 +5,4 @@ out/
 *.jsonl
 *.linxtrace
 *.md.tmp
+!docs/bringup/gates/latest.json

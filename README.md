@@ -2,6 +2,14 @@
 
 LinxCoreModel is the Rust modeling workspace for LinxCore.
 
+Project policy and verification entrypoints:
+
+- contributor guidance: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- security process: [`SECURITY.md`](SECURITY.md)
+- workspace layout: [`docs/project/layout.md`](docs/project/layout.md)
+- crosscheck gates: [`docs/verification/crosscheck-gates.md`](docs/verification/crosscheck-gates.md)
+- latest gate report: [`docs/bringup/gates/latest.json`](docs/bringup/gates/latest.json)
+
 Current workspace contents:
 
 - `isa`: shared architectural types and trace contracts
@@ -82,3 +90,23 @@ Still incomplete in this phase:
 - bootstrap auxv now includes deterministic `AT_MINSIGSTKSZ`, `AT_PLATFORM`,
   `AT_HWCAP*`, `AT_CLKTCK`, and `AT_SYSINFO_EHDR` entries for libc startup paths
 - cycle-accurate execution and QEMU lockstep remain separate follow-on work
+
+## Verification
+
+Minimum structural check:
+
+```bash
+bash tools/ci/check_repo_layout.sh
+```
+
+Full repo-local gate pack:
+
+```bash
+bash tools/regression/run_crosschecks.sh
+```
+
+To require the local CLI smoke on a previously built bring-up ELF:
+
+```bash
+bash tools/regression/run_crosschecks.sh --require-smoke
+```

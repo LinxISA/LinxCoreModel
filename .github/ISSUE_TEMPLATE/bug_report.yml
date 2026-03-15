@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a functional, cycle-model, trace, or tooling bug
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is broken?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Include commands, fixture paths, and expected vs actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation context
+      description: Note whether `tools/regression/run_crosschecks.sh` was run and what failed.
+    validations:
+      required: false

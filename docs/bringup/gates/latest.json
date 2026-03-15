@@ -1,0 +1,178 @@
+{
+  "generated_at_utc": "2026-03-15 01:06:51Z",
+  "repo": "LinxISA/LinxCoreModel",
+  "runs": [
+    {
+      "run_id": "local-20260315T010647Z",
+      "generated_at_utc": "2026-03-15 01:06:51Z",
+      "profile": "repo-local-crosscheck",
+      "lane": "local",
+      "trace_schema_version": "1.0",
+      "gates": [
+        {
+          "gate": "Repository layout",
+          "domain": "Repo",
+          "classification": "layout_ok",
+          "command": "bash tools/ci/check_repo_layout.sh",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/layout.log"
+          ]
+        },
+        {
+          "gate": "Cargo fmt",
+          "domain": "Workspace",
+          "classification": "fmt_clean",
+          "command": "cargo fmt --all --check",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/fmt.log"
+          ]
+        },
+        {
+          "gate": "camodel tests",
+          "domain": "camodel",
+          "classification": "cargo_test_pass",
+          "command": "cargo test -q -p camodel",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/camodel.log"
+          ]
+        },
+        {
+          "gate": "funcmodel tests",
+          "domain": "funcmodel",
+          "classification": "cargo_test_pass",
+          "command": "cargo test -q -p funcmodel",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/funcmodel.log"
+          ]
+        },
+        {
+          "gate": "trace tests",
+          "domain": "trace",
+          "classification": "cargo_test_pass",
+          "command": "cargo test -q -p trace",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/trace.log"
+          ]
+        },
+        {
+          "gate": "cosim tests",
+          "domain": "cosim",
+          "classification": "cargo_test_pass",
+          "command": "cargo test -q -p cosim",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/cosim.log"
+          ]
+        },
+        {
+          "gate": "workspace tests",
+          "domain": "Workspace",
+          "classification": "cargo_test_pass",
+          "command": "cargo test -q",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/workspace.log"
+          ]
+        },
+        {
+          "gate": "func/cycle synthetic crosscheck",
+          "domain": "Crosscheck",
+          "classification": "func_cycle_match",
+          "command": "cargo test -q -p camodel crosscheck_func_and_cycle_engines_on_sample_runtime",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/crosscheck-unit.log"
+          ]
+        },
+        {
+          "gate": "functional CLI smoke",
+          "domain": "Crosscheck",
+          "classification": "func_cli_smoke_pass",
+          "command": "cargo run --quiet --bin lx-run -- --engine func --elf out/bringup/linux_user_compiler_smoke_O0.elf --max-steps 100000 --out-dir out/crosschecks/func-smoke",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/func-smoke.log"
+          ]
+        },
+        {
+          "gate": "cycle CLI smoke",
+          "domain": "Crosscheck",
+          "classification": "cycle_cli_smoke_pass",
+          "command": "cargo run --quiet --bin lx-run -- --engine cycle --elf out/bringup/linux_user_compiler_smoke_O0.elf --max-cycles 512 --out-dir out/crosschecks/cycle-smoke",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/cycle-smoke.log"
+          ]
+        },
+        {
+          "gate": "cycle vs func commit crosscheck",
+          "domain": "Crosscheck",
+          "classification": "cycle_func_cosim_match",
+          "command": "cargo run --quiet --bin lx-cosim -- --engine cycle --elf out/bringup/linux_user_compiler_smoke_O0.elf --qemu out/crosschecks/func-smoke/commit.jsonl --out-dir out/crosschecks/cosim",
+          "status": "pass",
+          "required": true,
+          "owner": "maintainers",
+          "waived": false,
+          "evidence_type": "log",
+          "evidence": [
+            "log:out/crosschecks/logs/cosim-smoke.log"
+          ]
+        }
+      ],
+      "metrics": {
+        "func_exit_reason": "guest_exit(0)",
+        "func_commits": 77,
+        "cycle_exit_reason": "guest_exit(0)",
+        "cycle_commits": 77,
+        "cycle_cycles": 160,
+        "cosim_match": true,
+        "cosim_matched_commits": 77
+      }
+    }
+  ]
+}
