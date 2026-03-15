@@ -1,0 +1,22 @@
+name: Regression
+description: Report a behavior change against a previously passing gate or smoke
+title: "[regression] "
+labels: ["regression"]
+body:
+  - type: input
+    id: last_good
+    attributes:
+      label: Last known good commit
+    validations:
+      required: true
+  - type: input
+    id: first_bad
+    attributes:
+      label: First known bad commit
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Include command lines, gate report excerpts, and any relevant logs or trace references.
+    validations:
+      required: true

@@ -1,0 +1,15 @@
+* @LinxISA/maintainers
+
+/.github/ @LinxISA/maintainers
+/docs/ @LinxISA/maintainers
+/tools/ @LinxISA/maintainers
+
+/crates/camodel/ @LinxISA/maintainers
+/crates/funcmodel/ @LinxISA/maintainers
+/crates/cosim/ @LinxISA/maintainers
+/crates/trace/ @LinxISA/maintainers
+/crates/runtime/ @LinxISA/maintainers
+/crates/isa/ @LinxISA/maintainers
+/crates/elf/ @LinxISA/maintainers
+/crates/dse/ @LinxISA/maintainers
+/crates/lx-tools/ @LinxISA/maintainers

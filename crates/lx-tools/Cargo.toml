@@ -1,0 +1,19 @@
+[package]
+name = "lx-tools"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+serde_json.workspace = true
+camodel = { path = "../camodel" }
+cosim = { path = "../cosim" }
+dse = { path = "../dse" }
+elf = { path = "../elf" }
+funcmodel = { path = "../funcmodel" }
+isa = { path = "../isa" }
+runtime = { path = "../runtime" }
+trace = { path = "../trace" }

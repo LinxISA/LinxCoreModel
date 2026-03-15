@@ -1,0 +1,16 @@
+name: Documentation
+description: Request or report a docs update
+title: "[docs] "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: issue
+    attributes:
+      label: What should change?
+    validations:
+      required: true
+  - type: input
+    id: path
+    attributes:
+      label: Relevant path
+      description: README, docs path, or crate path if known.

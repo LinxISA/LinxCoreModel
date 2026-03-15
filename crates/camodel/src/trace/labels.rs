@@ -1,0 +1,1 @@
+// Trace-label namespace placeholder.

@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check repository layout
+        run: bash tools/ci/check_repo_layout.sh
+
+  workspace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - name: Cargo fmt
+        run: cargo fmt --all --check
+      - name: Cargo test
+        run: cargo test -q
+
+  crosscheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - name: Run repo-local crosschecks
+        run: bash tools/regression/run_crosschecks.sh --out-dir out/ci-crosschecks
+      - name: Upload gate artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: crosscheck-artifacts
+          path: |
+            out/ci-crosschecks
+            docs/bringup/gates/latest.json
