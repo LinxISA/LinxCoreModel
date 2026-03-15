@@ -410,9 +410,8 @@ fn decode_tables() -> &'static DecodeTables {
 }
 
 fn build_decode_tables() -> DecodeTables {
-    let raw: RawIsaBundle =
-        serde_json::from_str(include_str!("../../../../../isa/v0.4/linxisa-v0.4.json"))
-            .expect("failed to parse embedded LinxISA v0.4 JSON");
+    let raw: RawIsaBundle = serde_json::from_str(include_str!("../data/linxisa-v0.4.json"))
+        .expect("failed to parse embedded LinxISA v0.4 JSON");
 
     let mut tables = DecodeTables::default();
     for instruction in raw.instructions {

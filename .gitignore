@@ -6,3 +6,4 @@ out/
 *.linxtrace
 *.md.tmp
 !docs/bringup/gates/latest.json
+!crates/isa/data/linxisa-v0.4.json

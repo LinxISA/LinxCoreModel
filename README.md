@@ -33,7 +33,7 @@ Current crate layout:
 The current implementation lands the full workspace shape, executable `lx-*`
 surface, static ELF loading, runtime bootstrap, syscall allowlist scaffolding,
 commit/pipeview emission, lockstep compare helpers, and a full table-driven
-LinxISA `v0.4` decoder sourced from the canonical ISA JSON.
+LinxISA `v0.4` decoder sourced from a vendored copy of the canonical ISA JSON.
 
 Current functional-engine status:
 
